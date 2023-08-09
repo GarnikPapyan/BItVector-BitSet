@@ -17,10 +17,8 @@ public class BitVector  {
         }
         int size = 0;
 
-        if( bitSize/32 < 0){
-            size = 1;
-        } else if( bitSize%32 == 0 ) {
-            size = bitSize/32;    
+        if( bitSize%32 == 0 ) {
+            size = bitSize/32;
         } else {
             size = bitSize/32 + 1;
         }
@@ -36,8 +34,7 @@ public class BitVector  {
                 myarr = reader.readLine(); 
                 reader.close();
         } catch (IOException e) {
-            System.out.println("Serob don't panic the file just needs to be created this is the first time enter the index :))");
-            //e.printStackTrace();
+            System.out.println("Don't panic the file just needs to be created this is the first time enter the index :))");
         }
 
       
@@ -45,9 +42,12 @@ public class BitVector  {
 
             String trimmedString = myarr.substring(1, myarr.length() - 1);
             String[] numberStrings = trimmedString.split(", ");
-            for (int i = 0; i < size; i++) {
-            arr[i] = Integer.parseInt(numberStrings[i]);
-            } 
+            if(numberStrings.length>=size) {
+                for (int i = 0; i < size; i++) {
+                arr[i] = Integer.parseInt(numberStrings[i]);
+            }
+            }
+             
 
         }
         
@@ -122,55 +122,15 @@ public class BitVector  {
 
             if (index < 0) {
             throw new IndexOutOfBoundsException("Index out of bounds.");
-            }
-
-            int i = 0;
-            switch(index/32) {
-                case 0: {
-                    i = 0;
-                    break;
-                }
-                case 1: {
-                    i = 1;
-                    break;
-                }
-                case 2: {
-                    i = 2;
-                    break;
-                }
-                case 3: {
-                    i = 3;
-                    break;
-                }
-            }
-
-            arr[i] |= (1 << index);
+            }   
+            arr[index/32] |= (1 << index);
     }
     
     public static void  reSetVector(int index,int arr[]) {
             if (index < 0) {
             throw new IndexOutOfBoundsException("Index out of bounds.");
             }
-            int i = 0;
-            switch(index/32){
-                case 0: {
-                    i = 0;
-                    break;
-                }
-                case 1: {
-                    i = 1;
-                    break;
-                }
-                case 2: {
-                    i = 2;
-                    break;
-                }
-                case 3: {
-                    i = 3;
-                    break;
-                }
-            }
-            arr[i] &= ~(1 << index);       
+            arr[index/32] &= ~(1 << index);       
     }
         
 }
